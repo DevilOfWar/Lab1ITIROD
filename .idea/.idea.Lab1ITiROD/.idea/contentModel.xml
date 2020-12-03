@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Lab1ITiROD.-668293479.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="Lab1ITiROD.Client" t="IncludeRecursive">
+        <e p="Lab1ITiROD.Client.csproj" t="IncludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Services" t="Include">
+          <e p="ClientService.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Lab1ITiROD.Client.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Lab1ITiROD.Common" t="IncludeRecursive">
+        <e p="Entity" t="Include">
+          <e p="DataContainer.cs" t="Include" />
+          <e p="IEntity.cs" t="Include" />
+          <e p="Operation.cs" t="Include" />
+          <e p="Technical.cs" t="Include" />
+        </e>
+        <e p="Lab1ITiROD.Common.csproj" t="IncludeRecursive" />
+        <e p="Repository" t="Include">
+          <e p="IRepository.cs" t="Include" />
+          <e p="XMLRepository.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Lab1ITiROD.Common.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Lab1ITiROD.Server" t="IncludeRecursive">
+        <e p="Lab1ITiROD.Server.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="ServerFacade.cs" t="Include" />
+          <e p="TechnicalRepository.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="Lab1ITiROD.Server.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Lab1ITiROD.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
