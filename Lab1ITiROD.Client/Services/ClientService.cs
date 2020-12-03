@@ -201,7 +201,7 @@ namespace Lab1ITiROD.Client.Services
                             sendData = new DataContainer<Technical>()
                             {
                                 Data = newTechnical,
-                                Operation = Operation.Delele
+                                Operation = Operation.Delete
                             };
                             _formatter.Serialize(streamDelete, sendData);
                             string recieveData = _formatter.Deserialize(streamDelete) as string;

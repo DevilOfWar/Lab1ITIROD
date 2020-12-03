@@ -98,7 +98,7 @@ namespace Lab1ITiROD.Server.Models
                         }
                         break;
                     }
-                    case Operation.Delele:
+                    case Operation.Delete:
                     {
                         var result = _repository.Delete(operation.Data);
                         _formatter.Serialize(stream, result);

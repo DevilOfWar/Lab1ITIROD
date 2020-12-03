@@ -4,8 +4,7 @@ namespace Lab1ITiROD.Common.Entity
     {
         Create,
         Edit,
-        Delele,
-        Watch,
-        Find
+        Delete,
+        Watch
     }
 }
