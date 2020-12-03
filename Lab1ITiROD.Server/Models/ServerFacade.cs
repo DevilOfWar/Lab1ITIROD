@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -16,10 +14,8 @@ namespace Lab1ITiROD.Server.Models
     where T: class, IEntity
     {
         private readonly IRepository<T> _repository;
-        private static string _ip;
-        private static int _port;
         private readonly BinaryFormatter _formatter = new BinaryFormatter();
-        private int _threadCount = 0;
+        private int _threadCount;
         private readonly object _locker = new object();
         private static TcpListener _server;
 
@@ -38,9 +34,7 @@ namespace Lab1ITiROD.Server.Models
         public ServerFacade(IRepository<T> repository, string ip, int port)
         {
             _repository = repository;
-            _ip = ip;
-            _port = port;
-            _server = new TcpListener(IPAddress.Parse(_ip), _port);
+            _server = new TcpListener(IPAddress.Parse(ip), port);
         }
 
         public async Task Start()
@@ -73,10 +67,6 @@ namespace Lab1ITiROD.Server.Models
             TcpClient client = await _server.AcceptTcpClientAsync();
             Console.WriteLine("New connection is found...");
             await using NetworkStream stream = client.GetStream();
-            using (StreamWriter log = new StreamWriter("log.txt", true))
-            {
-                log.WriteLine("Stream Writable: " + stream.CanWrite);
-            }
             DataContainer<T> operation = _formatter.Deserialize(stream) as DataContainer<T>;
            ProccessOperation(new ProcessingParams(operation, stream));
            _threadCount--;
@@ -94,10 +84,6 @@ namespace Lab1ITiROD.Server.Models
             }
             DataContainer<T> operation = ((ProcessingParams) param).OperationData;
             NetworkStream stream = ((ProcessingParams) param).Stream;
-            using (StreamWriter log = new StreamWriter("log.txt", true))
-            {
-                log.WriteLine("Stream Writable: " + stream.CanWrite);
-            }
             lock (_locker)
             {
                 switch (operation.Operation)

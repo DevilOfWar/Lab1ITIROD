@@ -20,7 +20,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ee4c0c18-20ec-44c0-b6be-5a68d5b70cc3" name="Default Changelist" comment="VRODE WORK">
+    <list default="true" id="ee4c0c18-20ec-44c0-b6be-5a68d5b70cc3" name="Default Changelist" comment="Rework thread counting">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Lab1ITiROD/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lab1ITiROD/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lab1ITiROD.Server/Models/ServerFacade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1ITiROD.Server/Models/ServerFacade.cs" afterDir="false" />
     </list>
@@ -138,7 +138,7 @@
       <workItem from="1605170831744" duration="4179000" />
       <workItem from="1605768945211" duration="4254000" />
       <workItem from="1606974312763" duration="3503000" />
-      <workItem from="1606978674395" duration="5298000" />
+      <workItem from="1606978674395" duration="5350000" />
     </task>
     <task id="LOCAL-00001" summary="PIZDEC">
       <created>1606979625686</created>
@@ -161,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606983394186</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Rework thread counting">
+      <created>1606984021560</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606984021560</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,29 +204,30 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="PIZDEC" />
     <MESSAGE value="VRODE WORK" />
-    <option name="LAST_COMMIT_MESSAGE" value="VRODE WORK" />
+    <MESSAGE value="Rework thread counting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rework thread counting" />
   </component>
   <component name="WindowStateProjectService">
     <state x="502" y="155" width="424" height="491" key="FileChooserDialogImpl" timestamp="1603961083111">
       <screen x="72" y="27" width="1294" height="741" />
     </state>
     <state x="502" y="155" width="424" height="491" key="FileChooserDialogImpl/72.27.1294.741@72.27.1294.741" timestamp="1603961083111" />
-    <state width="1320" height="172" key="GridCell.Tab.0.bottom" timestamp="1606983934606">
+    <state width="1320" height="172" key="GridCell.Tab.0.bottom" timestamp="1606984045138">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1320" height="172" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1606983934606" />
-    <state width="1320" height="172" key="GridCell.Tab.0.center" timestamp="1606983934605">
+    <state width="1320" height="172" key="GridCell.Tab.0.bottom/0.27.1366.741@0.27.1366.741" timestamp="1606984045138" />
+    <state width="1320" height="172" key="GridCell.Tab.0.center" timestamp="1606984045137">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1320" height="172" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1606983934605" />
-    <state width="1320" height="172" key="GridCell.Tab.0.left" timestamp="1606983934603">
+    <state width="1320" height="172" key="GridCell.Tab.0.center/0.27.1366.741@0.27.1366.741" timestamp="1606984045137" />
+    <state width="1320" height="172" key="GridCell.Tab.0.left" timestamp="1606984045121">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1320" height="172" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1606983934603" />
-    <state width="1320" height="172" key="GridCell.Tab.0.right" timestamp="1606983934606">
+    <state width="1320" height="172" key="GridCell.Tab.0.left/0.27.1366.741@0.27.1366.741" timestamp="1606984045121" />
+    <state width="1320" height="172" key="GridCell.Tab.0.right" timestamp="1606984045138">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
-    <state width="1320" height="172" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1606983934606" />
+    <state width="1320" height="172" key="GridCell.Tab.0.right/0.27.1366.741@0.27.1366.741" timestamp="1606984045138" />
     <state width="1320" height="242" key="GridCell.Tab.1.bottom" timestamp="1606977830311">
       <screen x="0" y="27" width="1366" height="741" />
     </state>
