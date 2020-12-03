@@ -19,7 +19,7 @@ namespace Lab1ITiROD.Server.Models
         private static string _ip;
         private static int _port;
         private readonly BinaryFormatter _formatter = new BinaryFormatter();
-        private List<Thread> _threadList = new List<Thread>();
+        private int _threadCount = 0;
         private readonly object _locker = new object();
         private static TcpListener _server;
 
@@ -51,10 +51,11 @@ namespace Lab1ITiROD.Server.Models
                 Console.WriteLine("Start Server...");
                 while (true)
                 {
-                    if (_threadList.Count < 5)
+                    if (_threadCount < 5)
                     {
-                        _threadList.Add(new Thread(ClientCatching));
-                        _threadList.Last().Start();
+                        Thread thread = new Thread(ClientCatching);
+                        _threadCount++;
+                        thread.Start();
                     }
                 }
             }
@@ -78,6 +79,7 @@ namespace Lab1ITiROD.Server.Models
             }
             DataContainer<T> operation = _formatter.Deserialize(stream) as DataContainer<T>;
            ProccessOperation(new ProcessingParams(operation, stream));
+           _threadCount--;
         }
         
         private void ProccessOperation(object param)
@@ -145,7 +147,6 @@ namespace Lab1ITiROD.Server.Models
                         break;
                 }
             }
-            _threadList.Remove(Thread.CurrentThread);
             Console.WriteLine("Someone disconnected...");
         }
     }
