@@ -16,21 +16,21 @@ namespace Lab1ITiROD.Server.Models
     where T: class, IEntity
     {
         private readonly IRepository<T> _repository;
-        private readonly string _ip;
-        private readonly int _port;
+        private static string _ip;
+        private static int _port;
         private readonly BinaryFormatter _formatter = new BinaryFormatter();
         private List<Thread> _threadList = new List<Thread>();
-        private List<TcpClient> _clientList = new List<TcpClient>();
         private readonly object _locker = new object();
+        private static TcpListener _server;
 
         private class ProcessingParams
         {
-            public TcpClient Client { get; }
+            public NetworkStream Stream { get; }
             public DataContainer<T> OperationData { get; }
 
-            public ProcessingParams(DataContainer<T> operationData, TcpClient client)
+            public ProcessingParams(DataContainer<T> operationData, NetworkStream stream)
             {
-                Client = client;
+                Stream = stream;
                 OperationData = operationData;
             }
         }
@@ -40,43 +40,62 @@ namespace Lab1ITiROD.Server.Models
             _repository = repository;
             _ip = ip;
             _port = port;
+            _server = new TcpListener(IPAddress.Parse(_ip), _port);
         }
 
         public async Task Start()
         {
             try
             {
-                TcpListener server = new TcpListener(IPAddress.Parse(_ip), _port);
-                server.Start();
+                _server.Start();
+                Console.WriteLine("Start Server...");
                 while (true)
                 {
-                    _clientList.Add(await server.AcceptTcpClientAsync());
-                    Console.WriteLine("New connection is found...");
-                    await using NetworkStream stream = _clientList.Last().GetStream();
-                    DataContainer<T> operation = _formatter.Deserialize(stream) as DataContainer<T>;
-                    _threadList.Add(new Thread(ProccessOperation));
-                    _threadList.Last().Start(new ProcessingParams(operation, _clientList.Last()));
+                    if (_threadList.Count < 5)
+                    {
+                        _threadList.Add(new Thread(ClientCatching));
+                        _threadList.Last().Start();
+                    }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 await using StreamWriter stream = new StreamWriter("log.txt", true);
-                await stream.WriteAsync(e.Message);
+                await stream.WriteLineAsync(e.Message);
                 throw;
             }
         }
 
-        private async void ProccessOperation(object param)
+        private async void ClientCatching()
+        {
+            TcpClient client = await _server.AcceptTcpClientAsync();
+            Console.WriteLine("New connection is found...");
+            await using NetworkStream stream = client.GetStream();
+            using (StreamWriter log = new StreamWriter("log.txt", true))
+            {
+                log.WriteLine("Stream Writable: " + stream.CanWrite);
+            }
+            DataContainer<T> operation = _formatter.Deserialize(stream) as DataContainer<T>;
+           ProccessOperation(new ProcessingParams(operation, stream));
+        }
+        
+        private void ProccessOperation(object param)
         {
             if (!(param is ProcessingParams))
             {
-                await using StreamWriter log = new StreamWriter("log.txt", true);
-                await log.WriteAsync("Bad message format.");
+                using (StreamWriter log = new StreamWriter("log.txt", true))
+                {
+                    log.WriteLine("Bad message format.");
+                }
                 return;
             }
             DataContainer<T> operation = ((ProcessingParams) param).OperationData;
-            NetworkStream stream = ((ProcessingParams) param).Client.GetStream();
+            NetworkStream stream = ((ProcessingParams) param).Stream;
+            using (StreamWriter log = new StreamWriter("log.txt", true))
+            {
+                log.WriteLine("Stream Writable: " + stream.CanWrite);
+            }
             lock (_locker)
             {
                 switch (operation.Operation)
@@ -87,7 +106,7 @@ namespace Lab1ITiROD.Server.Models
                         _formatter.Serialize(stream, result);
                         using (var log = new StreamWriter("log.txt", true))
                         {
-                            log.Write("Result of creating: " + result + ".");
+                            log.WriteLine("Result of creating: " + result + ".");
                         }
                         break;
                     }
@@ -97,7 +116,7 @@ namespace Lab1ITiROD.Server.Models
                         _formatter.Serialize(stream, result);
                         using (var log = new StreamWriter("log.txt", true))
                         {
-                            log.Write("Result of deleting: " + result + ".");
+                            log.WriteLine("Result of deleting: " + result + ".");
                         }
                         break;
                     }
@@ -107,7 +126,7 @@ namespace Lab1ITiROD.Server.Models
                         _formatter.Serialize(stream, result);
                         using (var log = new StreamWriter("log.txt", true))
                         {
-                            log.Write("Result of editing: " + result + ".");
+                            log.WriteLine("Result of editing: " + result + ".");
                         }
                         break;
                     }
@@ -117,7 +136,7 @@ namespace Lab1ITiROD.Server.Models
                         _formatter.Serialize(stream, outData);
                         using (var log = new StreamWriter("log.txt", true))
                         {
-                            log.Write("Database is read.");
+                            log.WriteLine("Database is read.");
                         }
                         break;
                     }
@@ -126,8 +145,6 @@ namespace Lab1ITiROD.Server.Models
                         break;
                 }
             }
-
-            _clientList.Remove(((ProcessingParams) param).Client);
             _threadList.Remove(Thread.CurrentThread);
             Console.WriteLine("Someone disconnected...");
         }

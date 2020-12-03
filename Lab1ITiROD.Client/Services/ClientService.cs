@@ -252,11 +252,12 @@ namespace Lab1ITiROD.Client.Services
                             {
                                 return 1;
                             }
-                            else if (y.Weight > x.Weight)
+
+                            if (y.Weight > x.Weight)
                             {
                                 return -1;
                             }
-                            else return 0;
+                            return 0;
                         });
                         foreach (Technical item in recieveData)
                         {
